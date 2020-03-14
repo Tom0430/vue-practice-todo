@@ -27,15 +27,15 @@ const app = new Vue({
         ],
         // 選択している options の value を記憶するためのデータ
         // 初期値を「-1」つまり「すべて」にする
-        current: -1
+        current: -1,
+        comment: ""
     },
     methods: {
         // ToDo 追加の処理
-        doAdd: function(event, value) {
-            // ref で名前を付けておいた要素を参照
-            var comment = this.$refs.comment
+        doAdd: function() {
+            var comment = this.comment
             // 入力がなければ何もしないで return
-            if (!comment.value.length) {
+            if (!comment.length) {
             return
             }
             // { 新しいID, コメント, 作業状態 }
@@ -43,11 +43,11 @@ const app = new Vue({
             // 作業状態「state」はデフォルト「作業中=0」で作成
             this.todos.push({
             id: todoStorage.uid++,
-            comment: comment.value,
+            comment,
             state: 0
             })
             // フォーム要素を空にする
-            comment.value = ''
+            this.comment = ''
         },
         // 状態変更の処理
         doChangeState: function(item) {
