@@ -9,6 +9,11 @@
 <body>
     <div id="app">
         <!-- 絞り込みラジオボタン -->
+        <label v-for="label in options">
+            <input type="radio"
+              v-model="current"
+              v-bind:value="label.value">{{ label.label }}
+        </label>
         <!-- ToDo テーブル -->
         <table>
             <!-- テーブルヘッダー -->
@@ -22,13 +27,13 @@
             </thead>
             <tbody>
               <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい -->
-                <tr v-for="item in todos" v-bind:key="item.id">
+                <tr v-for="item in computedTodos" v-bind:key="item.id">
                     <!-- 要素の情報 -->
                     <th>{{ item.id }}</th>
                     <td>{{ item.comment }}</td>
                     <td class="state">
                       <!-- 状態変更ボタンのモック -->
-                      <button v-on:click="doChangeState(item)">{{ item.state }}</button>
+                      <button v-on:click="doChangeState(item)"> {{ labels[item.state] }}</button>
                     </td>
                     <td class="button">
                       <!-- 削除ボタンのモック -->
@@ -37,6 +42,7 @@
                 </tr>
             </tbody>
           </table>
+          <p>{{ computedTodos.length }} 件を表示中</p>
         <!-- 新規登録フォーム -->
         <h2>新しい作業の追加</h2>
         <form class="add-form" v-on:submit.prevent="doAdd">
